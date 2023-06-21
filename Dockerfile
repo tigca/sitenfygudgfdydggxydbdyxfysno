@@ -6,9 +6,8 @@ ENV PIP_NO_CACHE_DIR=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-RUN apt update && apt install libcairo2 git build-essential -y --no-install-recommends
-RUN rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp/*
-RUN git clone https://github.com/MXRRI/Netfoll
+RUN docker volume create yacht
+RUN docker run -d -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock -v yacht:/config --name yacht selfhostedpro/yacht
 
 WORKDIR /Netfoll
 RUN pip install --no-warn-script-location --no-cache-dir -r requirements.txt
